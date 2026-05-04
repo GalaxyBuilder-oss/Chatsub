@@ -1,0 +1,16 @@
+import { test, expect } from "@playwright/test";
+
+test("status pengguna muncul saat online", async ({ page }) => {
+  await page.goto("http://localhost:5173");
+
+  // Buka form login terlebih dahulu
+  await page.click("text=Login");
+
+  // Isi username dan masuk
+  await page.fill("#username-input", "salim");
+  await page.click("#join-button");
+
+  // Verifikasi status online muncul
+  const userStatus = page.locator(".user-status");
+  await expect(userStatus).toContainText("salim (Online)");
+});
